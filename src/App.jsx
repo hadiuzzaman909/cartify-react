@@ -3,6 +3,7 @@ import { DUMMY_PRODUCTS } from './dummy-products.js';
 import Header from './components/shared/Header/Header.jsx'
 import Shop from './components/features/Products/Shop.jsx'
 import Product from './components/features/Products/Product.jsx';
+import {CartContext} from './components/store/shopping-cart-context.jsx';
 
 function App() {
   const [shoppingCart, setShoppingCart] = useState({ items: [] });
@@ -36,6 +37,7 @@ function App() {
         items: updatedItems,
       };
     });
+
   }
 
   function handleUpdateCartItemQuantity(productId, amount) {
@@ -63,8 +65,13 @@ function App() {
     });
   }
 
+  const ctxValue={
+    items: shoppingCart.items,
+    addItemToCart: handleAddItemToCart
+  } 
+
   return (
-    <>
+    <CartContext.Provider value={ctxValue}>
       <Header
         cart={shoppingCart}
         onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
@@ -72,10 +79,10 @@ function App() {
       <Shop> 
         {DUMMY_PRODUCTS.map((product) => (
           <li key={product.id}>
-            <Product {...product} onAddToCart={handleAddItemToCart} />
+            <Product {...product} />
           </li>
         ))}</Shop>
-    </>
+    </CartContext.Provider>
   );
 }
 
