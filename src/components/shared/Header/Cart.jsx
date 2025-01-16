@@ -17,7 +17,6 @@ export default function Cart({ onUpdateItemQuantity }) {
         <ul id="cart-items">
           {cartCtx.items.map((item) => {
             const formattedPrice = `$${item.price.toFixed(2)}`;
-
             return (
               <li key={item.id}>
                 <div>
@@ -25,11 +24,11 @@ export default function Cart({ onUpdateItemQuantity }) {
                   <span> ({formattedPrice})</span>
                 </div>
                 <div className="cart-item-actions">
-                  <button onClick={() => onUpdateItemQuantity(item.id, -1)}>
+                  <button onClick={() => cartCtx.updateItemQuantity(item.id, -1)}>
                     -
                   </button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => onUpdateItemQuantity(item.id, 1)}>
+                  <button onClick={() => cartCtx.updateItemQuantity(item.id, 1)}>
                     +
                   </button>
                 </div>
